@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<table id="table">
+<table id="table" border="1">
     <tr>
         <th>Nume</th>
         <th>Prenume</th>
@@ -30,23 +30,16 @@
 
 <button id="exportButton">Export Excel</button>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
 <script>
     document.getElementById('exportButton').addEventListener('click', function () {
         var table = document.getElementById('table');
-        var html = table.outerHTML;
-        var blob = new Blob([html], {
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-        });
-        var url = URL.createObjectURL(blob);
-
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'tabel_excel.xls';
-        a.click();
-
-        URL.revokeObjectURL(url);
+        var wb = XLSX.utils.table_to_book(table);
+        XLSX.writeFile(wb, 'tabel_excel.xlsx');
     });
 </script>
+
 
 </body>
 </html>

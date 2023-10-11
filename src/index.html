@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabel cu date MySQL</title>
+</head>
+<body>
+<h1>Date din MySQL</h1>
+<table border="1">
+    <tr>
+        <th>ID PC</th>
+        <th>Nume</th>
+        <th>Model</th>
+        <th>Culoare</th>
+        <th>Pret</th>
+        <th>Data Fabricarii</th>
+        <th>Material</th>
+        <th>Stoc</th>
+        <th>ID Caracteristici</th>
+    </tr>
+</table>
+
+<script>
+    const table = document.querySelector('table');
+    const tableBody = document.createElement('tbody');
+
+    fetch('http://localhost:3000/get-data')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(row => {
+                const newRow = tableBody.insertRow();
+                newRow.insertCell().textContent = row.id_Pc;
+                newRow.insertCell().textContent = row.nume;
+                newRow.insertCell().textContent = row.model;
+                newRow.insertCell().textContent = row.color;
+                newRow.insertCell().textContent = row.pret;
+                newRow.insertCell().textContent = new Date(row.data_fabricarii).toLocaleDateString();
+                newRow.insertCell().textContent = row.material;
+                newRow.insertCell().textContent = row.stoc;
+                newRow.insertCell().textContent = row.id_Caracteristici;
+            });
+
+            console.log(data, 'datele in forma json');
+        })
+        .catch(error => {
+            console.error('Eroare la obtinerea datelor:', error);
+        });
+
+    table.appendChild(tableBody);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Export Excel</title>
+</head>
+<body>
+
+<table id="table">
+    <tr>
+        <th>Nume</th>
+        <th>Prenume</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+    </tr>
+    <tr>
+        <td>Jane</td>
+        <td>Smith</td>
+        <td>jane@example.com</td>
+    </tr>
+    <tr>
+        <td>Bob</td>
+        <td>Johnson</td>
+        <td>bob@example.com</td>
+    </tr>
+</table>
+
+<button id="exportButton">Export Excel</button>
+
+<script>
+    document.getElementById('exportButton').addEventListener('click', function () {
+        var table = document.getElementById('table');
+        var html = table.outerHTML;
+        var blob = new Blob([html], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+        });
+        var url = URL.createObjectURL(blob);
+
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'tabel_excel.xls';
+        a.click();
+
+        URL.revokeObjectURL(url);
+    });
+</script>
+
+</body>
+</html>
